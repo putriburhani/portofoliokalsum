@@ -394,6 +394,48 @@ function setupProjectCards() {
   });
 }
 
+// Timeline animation
+document.addEventListener('DOMContentLoaded', function() {
+  // Set timeline progress based on scroll
+  const timelineProgress = document.querySelector('.timeline-progress');
+  const timelineSection = document.getElementById('timeline');
+  
+  function updateProgress() {
+    if (timelineSection) {
+      const sectionTop = timelineSection.offsetTop;
+      const sectionHeight = timelineSection.offsetHeight;
+      const scrollPosition = window.pageYOffset;
+      const windowHeight = window.innerHeight;
+      
+      if (scrollPosition > sectionTop - windowHeight/2) {
+        const progress = Math.min(1, (scrollPosition - sectionTop + windowHeight/2) / sectionHeight);
+        timelineProgress.style.height = progress * 100 + '%';
+      }
+    }
+  }
+  
+  // Reveal timeline items when they come into view
+  const timelineItems = document.querySelectorAll('.timeline-item');
+  
+  function revealItems() {
+    timelineItems.forEach(item => {
+      const itemTop = item.getBoundingClientRect().top;
+      if (itemTop < window.innerHeight * 0.8) {
+        item.classList.add('visible');
+      }
+    });
+  }
+  
+  window.addEventListener('scroll', function() {
+    updateProgress();
+    revealItems();
+  });
+  
+  // Initial check on page load
+  updateProgress();
+  revealItems();
+});
+
 // Typing animation for hero text (optional enhancement)
 function setupTypingAnimation() {
   const heroText = document.querySelector('.hero h1');
