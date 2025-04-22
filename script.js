@@ -1,483 +1,430 @@
-// Global Variables
-let isScrolling = false;
-let isPlayingMusic = false;
-const bgMusic = document.getElementById('bgMusic');
-const musicControl = document.getElementById('musicControl');
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portofolio Kalsum</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
 
-// Wait for DOM to be fully loaded
-document.addEventListener('DOMContentLoaded', function() {
-  // Initialize animations
-  initAnimations();
-  
-  // Setup smooth scrolling
-  setupSmoothScroll();
-  
-  // Setup navbar scroll behavior
-  setupNavbar();
-  
-  // Setup music player
-  setupMusicPlayer();
-  
-  // Setup profile image interaction
-  setupProfileImage();
-  
-  // Setup contact form
-  setupContactForm();
-  
-  // Setup project cards
-  setupProjectCards();
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-  // Setup navbar scroll behavior
-  setupNavbar();
-  
-  // Setup theme toggle
-  setupThemeToggle();
-  
-  // Setup music player
-  setupMusicPlayer();
-  
-  // Setup other functions from original code if they exist
-  if (typeof setupProfileImage === 'function') setupProfileImage();
-  if (typeof setupContactForm === 'function') setupContactForm();
-  if (typeof setupProjectCards === 'function') setupProjectCards();
-  
-  // Initialize animations
-  initAnimations();
-});
-
-
-// Initialize animations by checking elements in viewport
-function initAnimations() {
-  const animatedElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right');
-  
-  // Initial check for elements in viewport
-  checkElementsInViewport(animatedElements);
-  
-  // Check on scroll
-  window.addEventListener('scroll', function() {
-    if (!isScrolling) {
-      window.requestAnimationFrame(function() {
-        checkElementsInViewport(animatedElements);
-        isScrolling = false;
-      });
-      isScrolling = true;
-    }
-  });
-}
-
-// Check if elements are in viewport and add visible class
-function checkElementsInViewport(elements) {
-  elements.forEach(function(element) {
-    if (isElementInViewport(element)) {
-      element.classList.add('visible');
-    }
-  });
-}
-
-// Check if element is in viewport
-function isElementInViewport(element) {
-  const rect = element.getBoundingClientRect();
-  return (
-    rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.85 &&
-    rect.bottom >= 0 &&
-    rect.left <= (window.innerWidth || document.documentElement.clientWidth) &&
-    rect.right >= 0
-  );
-}
-
-// Setup smooth scrolling for navigation links
-function setupSmoothScroll() {
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      e.preventDefault();
-      
-      const targetId = this.getAttribute('href');
-      const targetElement = document.querySelector(targetId);
-      
-      if (targetElement) {
-        // Special animation for about button
-        if (targetId === "#about" && this.id === "btnAbout") {
-          const profileImage = document.getElementById('profileImage');
-          profileImage.classList.add('photo-to-about');
+  <!-- Navbar dengan Kontrol di Dalam Navbar Collapse -->
+<nav class="navbar navbar-expand-lg fixed-top">
+  <div class="container">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <div class="navbar-content">
+        <!-- Music Player dan Theme Toggle -->
+        <div class="navbar-controls">
+          <!-- Music Player Control -->
+          <div class="music-player">
+            <button id="musicControl" aria-label="Play Background Music">
+              <i class="fas fa-music"></i>
+            </button>
+            <audio id="bgMusic" loop>
+              <source src="i fell preatty.mpeg" type="audio/mpeg">
+            </audio>
+          </div>
           
-          setTimeout(() => {
-            window.scrollTo({
-              top: targetElement.offsetTop - 70,
-              behavior: 'smooth'
-            });
-            
-            setTimeout(() => {
-              profileImage.classList.remove('photo-to-about');
-            }, 1000);
-          }, 500);
-        } else {
-          // Normal smooth scroll
-          window.scrollTo({
-            top: targetElement.offsetTop - 70,
-            behavior: 'smooth'
-          });
-        }
+          <!-- Theme Toggle -->
+          <div class="theme-toggle" id="themeToggle">
+            <i class="fas fa-sun light-icon"></i>
+            <i class="fas fa-moon dark-icon"></i>
+          </div>
+        </div>
         
-        // Update active nav link
-        document.querySelectorAll('.nav-link').forEach(navLink => {
-          navLink.classList.remove('active');
-        });
-        document.querySelector(`a[href="${targetId}"]`).classList.add('active');
-      }
-    });
-  });
-}
+     <!-- Navigation Menu -->
+<div class="navbar-pill">
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link active" href="#home">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#about">About Me</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#skills">Skills</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#timeline">TimeLine</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#projects">Projects</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#contact">Contact</a>
+    </li>
+  </ul>
+</div>
+</div>
+</div>
+</div>
+</nav>
 
-// Setup navbar scroll behavior
-function setupNavbar() {
-  const navbar = document.querySelector('.navbar');
-  const navLinks = document.querySelectorAll('.nav-link');
-  
-  // Change navbar style on scroll
-  window.addEventListener('scroll', function() {
-    if (window.scrollY > 50) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
-  });
-  
-  // Active link handler
-  navLinks.forEach(function(link) {
-    link.addEventListener('click', function() {
-      navLinks.forEach(function(item) {
-        item.classList.remove('active');
-      });
-      this.classList.add('active');
-    });
-  });
-  
-  // Handle section scrolling and active link updating
-  window.addEventListener('scroll', function() {
-    let current = '';
-    const sections = document.querySelectorAll('section');
-    
-    sections.forEach(function(section) {
-      const sectionTop = section.offsetTop;
+
+  <!-- Hero Section -->
+<section id="home" class="hero">
+  <div class="container text-center">
+    <div class="profile-image-container">
+      <img src="aku1.jpeg" alt="Profile Photo" class="profile-image" id="profileImage">
+    </div>
+    <h1 class="highlight">Kalsum Burhani Putri</h1>
+    <p class="lead fade-in">Information Systems Student & Intern at Diskominfo</p>
+    <a href="#about" class="btn-custom" id="btnAbout">About Me</a>
+  </div>
+</section>
+
+
+  <!-- About Section -->
+  <section id="about" class="section-padding">
+    <div class="container">
+      <h2 class="section-title">About Me</h2>
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="about-content fade-in">
+            <p>Hi! I'm The Competent One — a creative, forward-thinking individual who values simplicity and innovation. Passionate about IT and web development, I love crafting functional, visually appealing solutions. With strong communication, time management, and teamwork skills, I thrive in collaborative spaces and always aim to grow through every challenge.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ <!-- Skills Section -->
+<section id="skills" class="section-padding skills bg-light">
+  <div class="container">
+    <h2 class="section-title">Skills</h2>
+    <div class="row g-4">
+      <div class="col-md-4 col-lg-2 col-6">
+        <div class="skill-card">
+          <div class="skill-icon">
+            <img src="html.png" alt="HTML">
+          </div>
+          <h4>HTML</h4>
+        </div>
+      </div>
+      <div class="col-md-4 col-lg-2 col-6">
+        <div class="skill-card">
+          <div class="skill-icon">
+            <img src="css.png" alt="CSS">
+          </div>
+          <h4>CSS</h4>
+        </div>
+      </div>
+      <div class="col-md-4 col-lg-2 col-6">
+        <div class="skill-card">
+          <div class="skill-icon">
+            <img src="js.png" alt="JavaScript">
+          </div>
+          <h4>JavaScript</h4>
+        </div>
+      </div>
+      <div class="col-md-4 col-lg-2 col-6">
+        <div class="skill-card">
+          <div class="skill-icon">
+            <img src="php.png" alt="Php">
+          </div>
+          <h4>Php</h4>
+        </div>
+      </div>
+      <div class="col-md-4 col-lg-2 col-6">
+        <div class="skill-card">
+          <div class="skill-icon">
+            <img src="bootstrap.jpg" alt="Bootstrap">
+          </div>
+          <h4>Bootstrap</h4>
+        </div>
+      </div>
+      <div class="col-md-4 col-lg-2 col-6">
+        <div class="skill-card">
+          <div class="skill-icon">
+            <img src="figma.png" alt="Figma">
+          </div>
+          <h4>Figma</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Timeline Section -->
+<section id="timeline" class="section-padding">
+  <div class="container">
+    <h2 class="section-title">Education Timeline</h2>
+    <div class="timeline-wrapper">
       
-      if (window.scrollY >= (sectionTop - 200)) {
-        current = section.getAttribute('id');
-      }
-    });
-    
-    navLinks.forEach(function(link) {
-      link.classList.remove('active');
-      if (link.getAttribute('href') === '#' + current) {
-        link.classList.add('active');
-      }
-    });
-  });
-}
-
-// Setup theme toggle
-function setupThemeToggle() {
-  const themeToggle = document.getElementById('themeToggle');
-  
-  // Check for saved theme preference or respect OS theme settings
-  if (localStorage.getItem('theme') === 'dark' || 
-      (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && 
-       !localStorage.getItem('theme'))) {
-    document.body.classList.add('dark-mode');
-  }
-  
-  // Theme toggle click handler
-  themeToggle.addEventListener('click', function() {
-    document.body.classList.toggle('dark-mode');
-    
-    // Save user preference
-    if (document.body.classList.contains('dark-mode')) {
-      localStorage.setItem('theme', 'dark');
-    } else {
-      localStorage.setItem('theme', 'light');
-    }
-  });
-}
-
-// Setup music player functionality
-function setupMusicPlayer() {
-  const musicControl = document.getElementById('musicControl');
-  const bgMusic = document.getElementById('bgMusic');
-  let isPlaying = false;
-  
-  // Function to play music
-  function playMusic() {
-    bgMusic.play()
-      .then(() => {
-        isPlaying = true;
-        musicControl.classList.add('playing');
-      })
-      .catch(error => {
-        console.error("Error playing audio:", error);
-      });
-  }
-  
-  // Function to pause music
-  function pauseMusic() {
-    bgMusic.pause();
-    isPlaying = false;
-    musicControl.classList.remove('playing');
-  }
-  
-  // Toggle music on button click
-  musicControl.addEventListener('click', function() {
-    if (isPlaying) {
-      pauseMusic();
-    } else {
-      playMusic();
-    }
-  });
-  
-  // Handle page visibility changes
-  document.addEventListener('visibilitychange', function() {
-    if (document.hidden && isPlaying) {
-      pauseMusic();
-    }
-  });
-}
-
-// Initialize animations by checking elements in viewport
-function initAnimations() {
-  const animatedElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right');
-  
-  // Initial check for elements in viewport
-  checkElementsInViewport(animatedElements);
-  
-  // Check on scroll
-  let isScrolling = false;
-  window.addEventListener('scroll', function() {
-    if (!isScrolling) {
-      window.requestAnimationFrame(function() {
-        checkElementsInViewport(animatedElements);
-        isScrolling = false;
-      });
-      isScrolling = true;
-    }
-  });
-}
-
-// Check if elements are in viewport and add visible class
-function checkElementsInViewport(elements) {
-  elements.forEach(function(element) {
-    if (isElementInViewport(element)) {
-      element.classList.add('visible');
-    }
-  });
-}
-
-// Check if element is in viewport
-function isElementInViewport(element) {
-  const rect = element.getBoundingClientRect();
-  return (
-    rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.85 &&
-    rect.bottom >= 0 &&
-    rect.left <= (window.innerWidth || document.documentElement.clientWidth) &&
-    rect.right >= 0
-  );
-}
-// Setup profile image interactions
-function setupProfileImage() {
-  const profileImage = document.getElementById('profileImage');
-  
-  profileImage.addEventListener('mouseover', function() {
-    this.style.transform = 'scale(1.05) rotate(5deg)';
-  });
-  
-  profileImage.addEventListener('mouseout', function() {
-    this.style.transform = 'scale(1)';
-  });
-  
-  // Easter egg - click count
-  let clickCount = 0;
-  profileImage.addEventListener('click', function() {
-    clickCount++;
-    if (clickCount >= 5) {
-      this.style.transform = 'scale(1.2) rotate(360deg)';
-      setTimeout(() => {
-        this.style.transform = 'scale(1)';
-        clickCount = 0;
-      }, 1000);
-    }
-  });
-}
-
-// Setup contact form submission
-function setupContactForm() {
-  const contactForm = document.getElementById('contactForm');
-  
-  if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-      e.preventDefault();
+      <!-- Timeline Line -->
+      <div class="timeline-line">
+        <div class="timeline-progress"></div>
+      </div>
       
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const message = document.getElementById('message').value;
+      <!-- Timeline Item 1 -->
+      <div class="timeline-item fade-in">
+        <div class="timeline-date">
+          <span>2022</span>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-card">
+          <div class="timeline-icon">
+            <i class="fas fa-user-graduate"></i>
+          </div>
+          <h3>Started University</h3>
+          <p>Officially began studies in Information Systems at the Faculty of Engineering, Mulawarman University.</p>
+          <div class="timeline-tags">
+            <span>Basic Programming</span>
+            <span>Management & Organization</span>
+            <span>Information System and Technology</span>
+          </div>
+        </div>
+      </div>
       
-      // Validate inputs
-      if (name.trim() === '' || email.trim() === '' || message.trim() === '') {
-        showFormMessage('Please fill in all fields', 'error');
-        return;
-      }
+      <!-- Timeline Item 2 -->
+      <div class="timeline-item fade-in">
+        <div class="timeline-date">
+          <span>2023</span>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-card">
+          <div class="timeline-icon">
+            <i class="fas fa-laptop-code"></i>
+          </div>
+          <h3>Semester 2 & 3</h3>
+          <p>Started focusing on learning basic web programming. Also studied data structures, basic algorithms, and worked on small projects to practice real-world applications.</p>
+          <div class="timeline-tags">
+            <span>JavaScript</span>
+            <span>HTML/CSS</span>
+            <span>SQL</span>
+          </div>
+        </div>
+      </div>
       
-      // Basic email validation
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        showFormMessage('Please enter a valid email address', 'error');
-        return;
-      }
+      <!-- Timeline Item 3 -->
+      <div class="timeline-item fade-in">
+        <div class="timeline-date">
+          <span>2024</span>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-card">
+          <div class="timeline-icon">
+            <i class="fas fa-mobile-alt"></i>
+          </div>
+          <h3>Semester 4 & 5</h3>
+          <p>In semester 4, I focused on information system development, UI/UX design, and understanding Web Design & Programming. In semester 5, I participated in the <strong>Certified Independent Study</strong> program under Kampus Merdeka in the <em>Platform and Web Developer (Specialist Education Platform)</em> field, gaining hands-on experience through project-based learning.</p>
+          <div class="timeline-tags">
+            <span>UI/UX</span>
+            <span>MySQL</span>
+            <span>Platform & Web Development</span>
+          </div>
+        </div>
+      </div>
       
-      // Here you would typically send the form data to a server
-      // For now, we'll just simulate a successful submission
+      <!-- Timeline Item 4 -->
+      <div class="timeline-item fade-in">
+        <div class="timeline-date">
+          <span>2025</span>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-card">
+          <div class="timeline-icon">
+            <i class="fas fa-project-diagram"></i>
+          </div>
+          <h3>Semester 6</h3>
+          <p>Currently working on a <strong>Capstone Project</strong> and preparing to enter the professional world. I am also undertaking an <strong>Internship at the Department of Communication and Informatics</strong>, focusing on Applications and e-Government Services.</p>
+          <div class="timeline-tags">
+            <span>Laravel</span>
+            <span>Project Management</span>
+            <span>E-Government</span>
+          </div>
+        </div>
+      </div>
       
-      showFormMessage('Thanks for your message! I\'ll get back to you soon.', 'success');
-      contactForm.reset();
-    });
-  }
-}
+    </div>
+  </div>
+</section>
 
-// Show form submission message
-function showFormMessage(message, type) {
-  // Remove any existing message
-  const existingMessage = document.querySelector('.form-message');
-  if (existingMessage) {
-    existingMessage.remove();
-  }
-  
-  // Create new message
-  const messageElement = document.createElement('div');
-  messageElement.className = `form-message ${type === 'error' ? 'text-danger' : 'text-success'} mt-3`;
-  messageElement.textContent = message;
-  
-  // Add to DOM
-  const submitButton = document.querySelector('.btn-submit');
-  submitButton.parentNode.insertBefore(messageElement, submitButton.nextSibling);
-  
-  // Remove message after 5 seconds
-  setTimeout(() => {
-    messageElement.remove();
-  }, 5000);
-}
 
-// Setup project cards functionality
-function setupProjectCards() {
-  const projectCards = document.querySelectorAll('.project-card');
-  
-  projectCards.forEach(card => {
-    const projectImage = card.querySelector('.project-image img');
-    const projectLink = card.querySelector('.btn-project');
-    
-    // Add hover effect to project images
-    if (projectImage) {
-      card.addEventListener('mouseover', function() {
-        projectImage.style.transform = 'scale(1.05)';
-      });
+<!-- Projects Section -->
+<section id="projects" class="section-padding projects">
+  <div class="container">
+    <h2 class="section-title">Projects</h2>
+    <div class="row">
       
-      card.addEventListener('mouseout', function() {
-        projectImage.style.transform = 'scale(1)';
-      });
-    }
-    
-    // Handle project link clicks (for demo purposes)
-    if (projectLink) {
-      projectLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        const projectTitle = card.querySelector('h3').textContent;
-        alert(`Project details for "${projectTitle}" would open here. This is a demo functionality.`);
-      });
-    }
-  });
-}
+      <!-- Project 1 -->
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="project-card">
+          <div class="project-image">
+            <a href="web kerajinan tas khs kaltim.jpg" data-lightbox="projects" data-title="Web Kerajiinan tas khs kaltim">
+              <img src="web kerajinan tas khs kaltim.jpg" alt="Web Kerajinan tas khs kaltim" />
+            </a>
+          </div>
+          <div class="project-info">
+            <h3>Kalimantan Rattan Bag Craft Website</h3>
+            <p>A rattan bag craft website from Kalimantan where visitors can explore more exclusive souvenir products.</p>
+          </div>
+        </div>
+      </div>
 
-// Timeline animation
-document.addEventListener('DOMContentLoaded', function() {
-  // Set timeline progress based on scroll
-  const timelineProgress = document.querySelector('.timeline-progress');
-  const timelineSection = document.getElementById('timeline');
-  
-  function updateProgress() {
-    if (timelineSection) {
-      const sectionTop = timelineSection.offsetTop;
-      const sectionHeight = timelineSection.offsetHeight;
-      const scrollPosition = window.pageYOffset;
-      const windowHeight = window.innerHeight;
+      <!-- Project 2 -->
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="project-card">
+          <div class="project-image">
+            <iframe src="landing-page.pdf" width="100%" height="200px" style="border: none;"></iframe>
+          </div>
+          <div class="project-info">
+            <h3>Dior Website Landing Page</h3>
+            <p>This Dior Landing Page features an elegant and visually appealing design!</p>
+            <a href="landing-page.pdf" target="_blank" class="btn btn-primary btn-project mt-2">View PDF File</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="project-card">
+          <div class="project-image">
+            <iframe src="Digi-Cash.pdf" width="100%" height="200px" style="border: none;"></iframe>
+          </div>
+          <div class="project-info">
+            <h3>Digi Cash App</h3>
+            <p>A digital wallet app that provides secure transactions and personal financial solutions.</p>
+            <a href="Digi-Cash.pdf" target="_blank" class="btn btn-primary btn-project mt-2">View PDF File</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 4 -->
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="project-card">
+          <div class="project-image">
+            <iframe src="Questify.pdf" width="100%" height="200px" style="border: none;"></iframe>
+          </div>
+          <div class="project-info">
+            <h3>Questify Website</h3>
+            <p>An interactive educational platform to sharpen quick thinking and problem-solving skills.</p>
+            <a href="Questify.pdf" target="_blank" class="btn btn-primary btn-project mt-2">View PDF File</a>
+          </div>
+        </div>
+      </div>
       
-      if (scrollPosition > sectionTop - windowHeight/2) {
-        const progress = Math.min(1, (scrollPosition - sectionTop + windowHeight/2) / sectionHeight);
-        timelineProgress.style.height = progress * 100 + '%';
-      }
-    }
-  }
-  
-  // Reveal timeline items when they come into view
-  const timelineItems = document.querySelectorAll('.timeline-item');
-  
-  function revealItems() {
-    timelineItems.forEach(item => {
-      const itemTop = item.getBoundingClientRect().top;
-      if (itemTop < window.innerHeight * 0.8) {
-        item.classList.add('visible');
-      }
-    });
-  }
-  
-  window.addEventListener('scroll', function() {
-    updateProgress();
-    revealItems();
-  });
-  
-  // Initial check on page load
-  updateProgress();
-  revealItems();
-});
+      <!-- Project 5 -->
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="project-card">
+          <div class="project-image">
+            <iframe src="ToDoList.pdf" width="100%" height="200px" style="border: none;"></iframe>
+          </div>
+          <div class="project-info">
+            <h3>ToDoList Dashboard</h3>
+            <p>ToDoList Dashboard using Laravel</p>
+            <a href="ToDoList.pdf" target="_blank" class="btn btn-primary btn-project mt-2">View PDF File</a>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
 
-// Typing animation for hero text (optional enhancement)
-function setupTypingAnimation() {
-  const heroText = document.querySelector('.hero h1');
-  if (heroText) {
-    const text = heroText.innerHTML;
-    heroText.innerHTML = '';
-    
-    let i = 0;
-    const typing = setInterval(() => {
-      if (i < text.length) {
-        heroText.innerHTML += text.charAt(i);
-        i++;
-      } else {
-        clearInterval(typing);
-      }
-    }, 100);
-  }
-}
 
-// Optional: Load animations when elements come into view 
-// This is a more efficient way to handle scroll animations
-function setupScrollAnimations() {
-  if ('IntersectionObserver' in window) {
-    const appearOptions = {
-      threshold: 0.25,
-      rootMargin: "0px 0px -100px 0px"
-    };
+<!-- Contact Section -->
+<section id="contact" class="section-padding bg-gradient">
+  <div class="container">
+    <h2 class="section-title text-center mb-5">Get In Touch</h2>
     
-    const appearOnScroll = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, appearOptions);
-    
-    document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(element => {
-      appearOnScroll.observe(element);
-    });
-  } else {
-    // Fallback for browsers without Intersection Observer support
-    initAnimations();
-  }
-}
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="contact-card">
+          <div class="row align-items-center">
+            <!-- Contact Info -->
+            <div class="col-md-6">
+              <div class="contact-info">
+                <h3 class="contact-heading">Let's Connect</h3>
+                
+                <div class="contact-items">
+                  <div class="contact-item">
+                    <a href="https://wa.me/6283139207861" target="_blank" class="contact-link">
+                      <div class="icon-box bg-success">
+                        <i class="fab fa-whatsapp"></i>
+                      </div>
+                      <div class="contact-text">
+                        <h4>WhatsApp</h4>
+                        <p>+62 831-3920-7861</p>
+                      </div>
+                    </a>
+                  </div>
+                  
+                  <div class="contact-item">
+                    <a href="mailto:putrikalsumburhani@gmail.com" class="contact-link">
+                      <div class="icon-box bg-primary">
+                        <i class="far fa-envelope"></i>
+                      </div>
+                      <div class="contact-text">
+                        <h4>Email</h4>
+                        <p>putrikalsumburhani@gmail.com</p>
+                      </div>
+                    </a>
+                  </div>
+                  
+                  <div class="contact-item">
+                    <a href="https://www.linkedin.com/in/kalsum-burhani-putri" target="_blank" class="contact-link">
+                      <div class="icon-box bg-linkedin">
+                        <i class="fab fa-linkedin-in"></i>
+                      </div>
+                      <div class="contact-text">
+                        <h4>LinkedIn</h4>
+                        <p>Connect professionally</p>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Contact Illustration -->
+            <div class="col-md-6 d-flex justify-content-center">
+              <div class="contact-illustration">
+                <img src="https://cdn.dribbble.com/users/1602563/screenshots/8869646/media/ddc33ce2c8e2570c410123f375e2c35c.gif" 
+                     alt="Contact Illustration" class="img-fluid">
+                <div class="contact-quote">
+                  <p>"I'd love to collaborate on your next project!"</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="social-icons">
+      <a href="https://www.instagram.com/kalsumburhani/" target="_blank" aria-label="Instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/kalsum-burhani-putri" target="_blank" aria-label="LinkedIn">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+      <a href="https://github.com/putriburhani" target="_blank" aria-label="GitHub">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <p> 2025 Kalsum Burhani Putri</p>
+  </div>
+</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
